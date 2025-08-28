@@ -18,6 +18,6 @@ public class EmailGeneratorController {
     @PostMapping("/generate")
     public ResponseEntity<String> generateEmail(@RequestBody EmailRequest emailRequest) throws JsonProcessingException {
         String response = emailGeneratorService.generateEmailReply(emailRequest);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(response);
     }
 }
