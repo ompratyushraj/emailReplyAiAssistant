@@ -1,67 +1,66 @@
 console.log("Email Writer");
 
-function getEmailContent(){
+function getEmailContent() {
     const selectors = [
         '.h7',
         '.a3s.aiL',
         '.gmail_quote',
         '[role="presentation"]'
     ];
-    for(const selector of selectors){
+    for (const selector of selectors) {
         const content = document.querySelector(selector);
-        if(content){
+        if (content) {
             return content.innerText.trim();
         }
-        return '';
     }
+    return ''; // ✅ FIXED: Moved return outside the loop to try all selectors before returning
 }
 
-function findComposeToolbar(){
-    const selectors = ['.btC','.aDh', '[role = "dialog"]', '.gU.Up'];
-    for(const selector of selectors){
+function findComposeToolbar() {
+    const selectors = ['.btC', '.aDh', '[role="dialog"]', '.gU.Up'];
+    for (const selector of selectors) {
         const toolbar = document.querySelector(selector);
-        if(toolbar){
+        if (toolbar) {
             return toolbar;
         }
-        return null;
     }
+    return null; // ✅ FIXED: Moved return null outside the loop to try all selectors
 }
 
 function createAIButton() {
-    const button = document.createElement('div');
-    button.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3';
-    button.style.marginRight = '8px';
-    button.innerHTML = 'AI Reply';
-    
-    // ✅ FIXED: Correct function calls
-    button.setAttribute('role', 'button');
-    button.setAttribute('data-tooltip', 'Generate AI Reply');
+    const buttonElement = document.createElement('div'); // ✅ FIXED: renamed from `button` to `buttonElement` to avoid scope collision
+    buttonElement.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3';
+    buttonElement.style.marginRight = '8px';
+    buttonElement.innerHTML = 'AI Reply';
 
-    console.log("AI Button:", button);
-    return button;
+    buttonElement.setAttribute('role', 'button');
+    buttonElement.setAttribute('data-tooltip', 'Generate AI Reply');
+
+    console.log("AI Button:", buttonElement);
+    return buttonElement;
 }
 
-
-function injectButton(){
+function injectButton() {
     const existingButton = document.querySelector('.ai-Reply-button');
-    if(existingButton){
+    if (existingButton) {
         existingButton.remove();
     }
 
     const toolbar = findComposeToolbar();
-    if(!toolbar){
+    if (!toolbar) {
         console.log("Toolbar not found");
         return;
     }
 
     console.log("Toolbar Found");
-    const button = createAIButton();
-    button.classList.add('ai-Reply-button'); 
+    const aiButton = createAIButton(); // ✅ FIXED: avoid using 'button' name here to prevent shadowing
+    aiButton.classList.add('ai-Reply-button');
 
-    button.addEventListener('click', async() => {
+    aiButton.addEventListener('click', async () => {
         try {
-            button.innerHTML='Generating...';
-            button.disabled=true;
+            aiButton.innerHTML = 'Generating...';
+            aiButton.setAttribute('disabled', 'true'); // ✅ FIXED: `div` elements don’t support `.disabled`, use attribute
+
             const emailContent = getEmailContent();
 
             const response = await fetch('http://localhost:8080/api/email/generate', {
@@ -75,7 +74,7 @@ function injectButton(){
                 })
             });
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw new Error("API Request Failed");
             }
 
@@ -84,30 +83,33 @@ function injectButton(){
             const composeBox = document.querySelector(
                 '[role="textbox"][g_editable="true"]'
             );
-            if(composeBox){
+            if (composeBox) {
                 composeBox.focus();
                 document.execCommand('insertText', false, generatedReply);
             }
         } catch (error) {
             console.log(error);
-        } finally{
-            button.innerHTML ="AI Reply";
-            button.disabled = false;
+        } finally {
+            aiButton.innerHTML = "AI Reply";
+            aiButton.removeAttribute('disabled'); // ✅ FIXED: Properly remove disabled attribute
         }
-    })
+    });
 
-    toolbar.insertBefore(button, toolbar.firstChild);
+    toolbar.insertBefore(aiButton, toolbar.firstChild);
 }
 
 const observer = new MutationObserver((mutations) => {
-    for(const mutation of mutations){
+    for (const mutation of mutations) {
         const addedNodes = Array.from(mutation.addedNodes);
-        const hasComposeElements = addedNodes.some(node => 
+        const hasComposeElements = addedNodes.some(node =>
             node.nodeType === Node.ELEMENT_NODE &&
-            (node.matches('.aDh, .btC, [role="dialog"]') || node.querySelector('.aDh, .btC, [role="dialog"]'))
+            (
+                node.matches?.('.aDh, .btC, [role="dialog"]') ||
+                node.querySelector?.('.aDh, .btC, [role="dialog"]')
+            )
         );
 
-        if(hasComposeElements){
+        if (hasComposeElements) {
             console.log("Compose Window Detected.");
             setTimeout(injectButton, 500);
         }
@@ -117,4 +119,4 @@ const observer = new MutationObserver((mutations) => {
 observer.observe(document.body, {
     childList: true,
     subtree: true
-});``
+});
