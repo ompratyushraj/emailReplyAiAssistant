@@ -109,7 +109,7 @@ function App() {
               <TextField
                 fullWidth
                 multiline
-                rows={6}
+                rows={10}
                 variant="outlined"
                 placeholder="Paste your email content here..."
                 value={emailContent}

@@ -1,5 +1,174 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Writer Assistant</title>
+
+    <!-- Google Fonts and Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-color: #121212;
+        --card-color: #1e1e1e;
+        --text-primary: #ffffff;
+        --text-secondary: #b0b0b0;
+        --accent-color: #03dac6;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 16px;
+        min-width: 280px;
+        max-width: 360px;
+        height: auto;
+      }
+
+      .card {
+        background-color: var(--card-color);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      img {
+        width: 60px;
+        height: auto;
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0 0 8px 0;
+      }
+
+      p {
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 18px;
+      }
+
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      /* Material Toggle Switch */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 22px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #555;
+        transition: 0.3s;
+        border-radius: 22px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.3s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--accent-color);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(18px);
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      .material-symbols-outlined {
+        font-size: 20px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
   <body>
-    <h1>Email AI Assistant Extension</h1>
+    <div class="card">
+      <img src="emaiAIAssistandLogo.png" alt="Email AI Assistant Logo" />
+      <h1>Email AI Reply Assistant</h1>
+      <p>
+        AI-powered email reply generator for Gmail. This Chrome extension
+        connects to a Spring Boot-powered backend integrated with Google's
+        Gemini AI to generate contextually relevant, intelligent replies based
+        on the content of incoming emails. A customizable tone system (e.g.,
+        formal, friendly, assertive) is under active development, allowing users
+        to tailor responses to their communication style. Designed for
+        productivity and seamless Gmail integration.
+      </p>
+
+      <div class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="toggle-extension" />
+          <span class="slider"></span>
+        </label>
+        <label for="toggle-extension">Enable Extension</label>
+      </div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("toggle-extension");
+
+      // Load saved state on load
+      chrome.storage.sync.get(["enabled"], function (result) {
+        toggle.checked = result.enabled ?? true;
+      });
+
+      // Save state on change
+      toggle.addEventListener("change", function () {
+        chrome.storage.sync.set({ enabled: toggle.checked }, function () {
+          console.log(
+            "Extension state is now",
+            toggle.checked ? "Enabled" : "Disabled"
+          );
+        });
+      });
+    </script>
   </body>
 </html>
