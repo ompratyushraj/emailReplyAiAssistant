@@ -66,7 +66,7 @@ It leverages Google's <b>Gemini API</b> for natural language generation, offerin
 
 ---
 
-## **Project View: **  
+## **Project View**  
 
 ### 1️⃣ Web App – Email Input Screen  
 <p align="center">
