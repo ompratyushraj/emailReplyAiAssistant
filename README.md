@@ -120,9 +120,35 @@ It leverages Google's <b>Gemini API</b> for natural language generation, offerin
      ```bash
      npm run dev
      ```
-   - Accessible on `http://localhost:5173`.  
+   - Accessible on `http://localhost:5173`.
+3. **Run [Frontend + Backend] at one time
+   - Integrated the dependency concurrently, installed above.
+   - For running the frontend and backend at a single code instance from the frontend:
+     ```bash
+     npm i concurrently
+     ```
+  - Integrate these script in the package.json file:
+    ```bash
+    "start": "java -jar \"D:\\Computer Science\\Spring\\springAIpproject\\springAIpproject\\target\\springAIpproject-0.0.1-SNAPSHOT.jar\"",
+    "both": "concurrently \"npm run dev\" \"npm run start\""
+    ```
+    Example: 
+    ```bash
+     "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "start": "java -jar \"D:\\Computer Science\\Spring\\springAIpproject\\springAIpproject\\target\\springAIpproject-0.0.1-SNAPSHOT.jar\"",
+    "both": "concurrently \"npm run dev\" \"npm run start\""
+    }
+     ```
+- Run:
+  ```bash
+  npm run both
+  ```
 
-3. **Extension Setup**  
+5. **Extension Setup**  
    - Go to `chrome://extensions`.  
    - Enable **Developer Mode**.  
    - Load unpacked extension from extension project folder.  
