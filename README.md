@@ -4,11 +4,13 @@
   
 </p>
 
+
 ## **Introduction**  
-The **Email AI Assistant** is a full-stack project integrating **Spring Boot backend**, **React frontend**, and a **Chrome extension** to generate AI-powered email replies.  
-It leverages Google's **Gemini API** for natural language generation, offering professional, casual, or friendly tones.  
 
-
+<p align="center">
+The <b>Email AI Assistant</b> is a full-stack project integrating <b>Spring Boot backend</b>, <b>React frontend</b>, and a <b>Chrome extension</b> to generate AI-powered email replies.  
+It leverages Google's <b>Gemini API</b> for natural language generation, offering professional, casual, or friendly tones.  
+</p>
 
 ---
 
@@ -68,27 +70,27 @@ It leverages Google's **Gemini API** for natural language generation, offering p
 
 ### 1️⃣ Web App – Email Input Screen  
 <p align="center">
-  <img src="Screenshot 2025-08-29 151621.png" alt="Web App Email Input" width="800"/>
+  <img width="1511" height="742" alt="Screenshot 2025-08-29 151621" src="https://github.com/user-attachments/assets/c40a16ed-b030-4916-a2f3-a5d6df8728bb" />
 </p>
 
 ### 2️⃣ Web App – Generated Email Reply  
 <p align="center">
-  <img src="Screenshot 2025-08-29 151912.png" alt="Web App Generated Reply" width="800"/>
+  <img width="1554" height="842" alt="Screenshot 2025-08-29 151912" src="https://github.com/user-attachments/assets/60e91764-5520-4c99-824c-de43a9570107" />
 </p>
 
 ### 3️⃣ Chrome Extension – Description Card  
 <p align="center">
-  <img src="Screenshot 2025-08-29 160812.png" alt="Chrome Extension Description" width="400"/>
+  <img width="384" height="502" alt="Screenshot 2025-08-29 160812" src="https://github.com/user-attachments/assets/40a1d82d-7358-4d26-a7e1-81f851307233" />
 </p>
 
 ### 4️⃣ Gmail Integration – AI Reply in Action  
 <p align="center">
-  <img src="Screenshot 2025-08-29 162745.png" alt="Gmail AI Reply" width="800"/>
+  <img width="1120" height="858" alt="Screenshot 2025-08-29 162745" src="https://github.com/user-attachments/assets/e4a00108-9a78-46b0-bb97-2ed698dd5d0c" />
 </p>
 
 ### 5️⃣ Chrome Extension – Installed View  
 <p align="center">
-  <img src="Screenshot 2025-08-29 162852.png" alt="Chrome Extension Installed" width="500"/>
+  <img width="535" height="323" alt="Screenshot 2025-08-29 162852" src="https://github.com/user-attachments/assets/be36daed-ad11-4abf-9fae-5028e6a46844" />
 </p>
 
 ---
@@ -100,6 +102,8 @@ It leverages Google's **Gemini API** for natural language generation, offering p
    - Run backend:  
      ```bash
      mvn spring-boot:run
+     mvn clean install
+     
      ```
    - API runs on `http://localhost:8080`.  
 
@@ -108,6 +112,9 @@ It leverages Google's **Gemini API** for natural language generation, offering p
    - Install dependencies:  
      ```bash
      npm install
+     npm install @emotion/react @emotion/styled @mui/icons-material @mui/material
+     npm install axios
+     npm install concurrently --save-dev
      ```
    - Start app:  
      ```bash
